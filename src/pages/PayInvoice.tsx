@@ -10,7 +10,7 @@ import { Transaction } from "@mysten/sui/transactions";
 import { toast } from 'react-toastify';
 import { useWalletStore } from "../store/useWalletStore";
 import { apiFetch } from "../utils/api";
-import { formatMistAsSui, mistToSui, formatSui } from "../utils/format";
+import { mistToSui, formatSui } from "../utils/format";
 
 export default function PayInvoice() {
   const { id } = useParams<{ id: string }>();

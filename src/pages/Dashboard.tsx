@@ -1,19 +1,16 @@
 import { useEffect, useState } from "react";
 import { useWalletStore } from "../store/useWalletStore";
 import { useInvoiceStore } from "../store/useInvoiceStore";
-import { useTransactionStore } from "../store/useTransactionStore";
 import { useWebSocket } from "../hooks/useWebSocket";
-import { formatMistAsSui, mistToSui, formatSui } from "../utils/format";
+import { mistToSui, formatSui } from "../utils/format";
 
 export default function Dashboard() {
   const address = useWalletStore((s) => s.address);
   const invoices = useInvoiceStore((s) => s.invoices);
   const fetchInvoices = useInvoiceStore((s) => s.fetchInvoices);
-  const txs = useTransactionStore((s) => s.txs);
-  const fetchTxs = useTransactionStore((s) => s.fetchTxs);
   
   // Initialize WebSocket connection for real-time updates
-  const { isConnected } = useWebSocket();
+  useWebSocket();
 
   const [stats, setStats] = useState({
     totalInvoices: 0,
@@ -25,9 +22,8 @@ export default function Dashboard() {
   useEffect(() => {
     if (address) {
       fetchInvoices(address);
-      fetchTxs(address);
     }
-  }, [address, fetchInvoices, fetchTxs]);
+  }, [address, fetchInvoices]);
 
   useEffect(() => {
     const paidInvoices = invoices.filter(inv => inv.status === "paid").length;
