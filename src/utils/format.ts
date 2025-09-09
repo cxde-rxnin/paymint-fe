@@ -31,3 +31,10 @@ export function formatSui(amount: number, decimals: number = 4): string {
 export function formatMistAsSui(mist: number, decimals: number = 4): string {
   return formatSui(mistToSui(mist), decimals);
 }
+
+/**
+ * Format currency amount with proper decimals
+ */
+export function formatCurrency(amount: number, decimals: number = 4): string {
+  return amount.toFixed(decimals);
+}

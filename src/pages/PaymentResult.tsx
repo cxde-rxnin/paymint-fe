@@ -6,11 +6,17 @@ export default function PaymentResult() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   
-  const success = searchParams.get('success') === 'true';
+  const type = searchParams.get('type') || 'invoice'; // 'invoice' or 'payroll'
+  const status = searchParams.get('status'); // 'success' or 'error'
   const txDigest = searchParams.get('txDigest');
   const amount = searchParams.get('amount');
   const service = searchParams.get('service');
+  const projectName = searchParams.get('projectName');
+  const recipientCount = searchParams.get('recipientCount');
   const error = searchParams.get('error');
+
+  // Legacy support for old URL format
+  const success = status === 'success' || searchParams.get('success') === 'true';
 
   useEffect(() => {
     // Auto redirect after 10 seconds
@@ -32,14 +38,40 @@ export default function PaymentResult() {
             </svg>
           </div>
 
-          <h1 className="text-2xl font-bold text-white mb-4">Payment Successful!</h1>
+          <h1 className="text-2xl font-bold text-white mb-4">
+            {type === 'payroll' ? 'Payroll Payment Successful!' : 'Payment Successful!'}
+          </h1>
           
           <div className="space-y-3 mb-6">
-            {service && (
-              <p className="text-gray-300">
-                <span className="text-gray-400">Service: </span>
-                {service}
-              </p>
+            {type === 'payroll' ? (
+              <>
+                {projectName && (
+                  <p className="text-gray-300">
+                    <span className="text-gray-400">Project: </span>
+                    {projectName}
+                  </p>
+                )}
+                {recipientCount && (
+                  <p className="text-gray-300">
+                    <span className="text-gray-400">Team Members: </span>
+                    {recipientCount}
+                  </p>
+                )}
+                <div className="bg-blue-900/20 border border-blue-500/30 p-3 rounded-lg">
+                  <p className="text-blue-400 text-sm">
+                    💡 Funds have been automatically distributed to all team members on the Sui blockchain
+                  </p>
+                </div>
+              </>
+            ) : (
+              <>
+                {service && (
+                  <p className="text-gray-300">
+                    <span className="text-gray-400">Service: </span>
+                    {service}
+                  </p>
+                )}
+              </>
             )}
             {amount && (
               <p className="text-gray-300">
@@ -96,7 +128,9 @@ export default function PaymentResult() {
           </svg>
         </div>
 
-        <h1 className="text-2xl font-bold text-white mb-4">Payment Failed</h1>
+        <h1 className="text-2xl font-bold text-white mb-4">
+          {type === 'payroll' ? 'Payroll Payment Failed' : 'Payment Failed'}
+        </h1>
         
         <div className="space-y-3 mb-6">
           {error && (
@@ -105,7 +139,10 @@ export default function PaymentResult() {
             </div>
           )}
           <p className="text-gray-400 text-sm">
-            Your payment could not be processed. Please try again or contact support if the problem persists.
+            {type === 'payroll' 
+              ? 'Your payroll payment could not be processed. Please try again or contact support if the problem persists.'
+              : 'Your payment could not be processed. Please try again or contact support if the problem persists.'
+            }
           </p>
         </div>
 
