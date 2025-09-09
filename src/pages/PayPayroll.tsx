@@ -11,13 +11,13 @@ import Button from "../components/ui/Button";
 import { usePayrollStore, type Payroll } from "../store/usePayrollStore";
 import { useWalletStore } from "../store/useWalletStore";
 import WalletConnect from "../components/WalletConnect";
-import { formatDate, mistToSui } from "../utils/format";
+import { mistToSui } from "../utils/format";
 import { apiFetch } from "../utils/api";
 
 export const PayPayroll: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { address, connected } = useWalletStore();
+  const { address } = useWalletStore();
   const { activePayroll, loading, error, fetchPayroll } = usePayrollStore();
   const [paying, setPaying] = useState(false);
   const currentAccount = useCurrentAccount();
