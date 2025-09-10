@@ -366,7 +366,7 @@ export const PayPayroll: React.FC = () => {
                         <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
                       </div>
                       <p className="text-emerald-400/70 text-sm font-mono">
-                        {walletAddress?.slice(0, 12)}...{walletAddress?.slice(-8)}
+                        {walletAddress?.slice(0, 4)}...
                       </p>
                     </div>
                     <div className="text-right">
