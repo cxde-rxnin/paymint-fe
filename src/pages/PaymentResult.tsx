@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { formatSui } from "../utils/format";
 
@@ -17,15 +16,6 @@ export default function PaymentResult() {
 
   // Legacy support for old URL format
   const success = status === 'success' || searchParams.get('success') === 'true';
-
-  useEffect(() => {
-    // Auto redirect after 10 seconds
-    const timeout = setTimeout(() => {
-      navigate('/');
-    }, 10000);
-
-    return () => clearTimeout(timeout);
-  }, [navigate]);
 
   if (success) {
     return (
@@ -88,15 +78,6 @@ export default function PaymentResult() {
           </div>
 
           <div className="space-y-3">
-            <button
-              onClick={() => {
-                navigate('/', { replace: true });
-              }}
-              className="w-full px-6 py-3 bg-gradient-to-r from-emerald-500 to-emerald-400 text-white font-semibold rounded-lg shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 hover:transform hover:-translate-y-0.5"
-            >
-              Return to Home
-            </button>
-            
             {txDigest && (
               <a
                 href={`https://testnet.suivision.xyz/txblock/${txDigest}`}

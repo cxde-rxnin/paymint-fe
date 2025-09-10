@@ -46,10 +46,28 @@ export default function PayInvoice() {
       return;
     }
 
+    // Check if invoice is already paid to prevent duplicate payments
+    if (invoice.status === "paid") {
+      toast.warning("This invoice has already been paid!");
+      return;
+    }
+
     console.log('Attempting payment with address:', walletAddress);
     
     setPayLoading(true);
     try {
+      // Double-check invoice status with server before processing payment
+      console.log('Verifying invoice status before payment...');
+      const latestInvoice = await apiFetch(`/api/invoices/${id}`);
+      
+      if (latestInvoice.status === "paid") {
+        toast.warning("This invoice was already paid by someone else!");
+        setPayLoading(false);
+        // Update the local invoice state
+        setInvoice(latestInvoice);
+        return;
+      }
+
       // Calculate total amount in MIST (smallest unit)
       const totalAmountMist = invoice.amount + Math.floor((invoice.amount * invoice.surchargeBps) / 10000);
       
@@ -206,6 +224,30 @@ export default function PayInvoice() {
     </div>
   );
 
+  if (invoice.status === "paid") {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+        <div className="text-center">
+          <div className="w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg className="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h1 className="text-2xl font-bold text-white mb-2">Already Paid</h1>
+          <p className="text-gray-400 mb-6">
+            This invoice has already been paid. Thank you for your payment!
+          </p>
+          <button 
+            onClick={() => navigate("/")} 
+            className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg transition-colors"
+          >
+            Go Home
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   // Convert MIST to SUI for display
   const amountInSui = mistToSui(invoice.amount);
   const surchargeInSui = (amountInSui * invoice.surchargeBps) / 10000;
@@ -301,7 +343,9 @@ export default function PayInvoice() {
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-xs text-gray-400">Ready to pay</p>
+                      <p className="text-xs text-gray-400">
+                        {invoice.status === "paid" ? "Already paid" : "Ready to pay"}
+                      </p>
                       <p className="text-emerald-400 font-bold">{formatSui(totalInSui)}</p>
                     </div>
                   </div>
@@ -310,7 +354,7 @@ export default function PayInvoice() {
                 {/* Payment Button */}
                 <button 
                   onClick={handlePay} 
-                  disabled={payLoading}
+                  disabled={payLoading || invoice.status === "paid"}
                   className="w-full group relative overflow-hidden px-8 py-6 bg-gradient-to-r from-emerald-500 via-emerald-400 to-green-500 text-white font-bold text-lg rounded-xl shadow-2xl shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all duration-300 hover:transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-lg border border-emerald-400/30"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/5 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
@@ -319,6 +363,13 @@ export default function PayInvoice() {
                     <span className="relative flex items-center justify-center gap-3">
                       <div className="w-6 h-6 border-3 border-white/30 border-t-white rounded-full animate-spin"></div>
                       <span>Processing Payment...</span>
+                    </span>
+                  ) : invoice.status === "paid" ? (
+                    <span className="relative flex items-center justify-center gap-3">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span>Invoice Already Paid</span>
                     </span>
                   ) : (
                     <span className="relative flex items-center justify-center gap-3">
