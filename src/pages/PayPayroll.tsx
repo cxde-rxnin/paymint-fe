@@ -275,7 +275,7 @@ export const PayPayroll: React.FC = () => {
                     <div key={index} className="flex justify-between items-center p-3 bg-gray-700/30 rounded-lg border border-gray-600/50">
                       <div className="flex-1 mr-4">
                         <p className="font-mono text-sm text-gray-300 truncate">
-                          {recipient.wallet}
+                          {recipient.wallet.slice(0, 4)}...
                         </p>
                       </div>
                       <div className="text-right">
