@@ -1,11 +1,14 @@
 import { Link, useLocation } from "react-router-dom";
-import { useWalletStore } from "../store/useWalletStore";
-import { truncateAddress } from "../utils/wallet";
 import WalletConnect from "./WalletConnect";
+import logo from "../assets/logo1.svg";
 
-export default function Sidebar() {
+interface SidebarProps {
+  isSidebarOpen: boolean;
+  onClose: () => void;
+}
+
+export default function Sidebar({ isSidebarOpen, onClose }: SidebarProps) {
   const location = useLocation();
-  const address = useWalletStore((s) => s.address);
 
   const navigation = [
     {
@@ -48,84 +51,67 @@ export default function Sidebar() {
   ];
 
   return (
-    <div className="w-64 min-h-screen bg-gray-800/50 backdrop-blur-sm border-r border-gray-700/50 md:fixed z-50">
-      {/* Header */}
-      <div className="p-6 border-b border-gray-700/50">
-      <div className="flex items-center gap-3">
-        <div>
-        <h1 className="text-xl font-bold bg-gradient-to-r from-emerald-400 to-emerald-300 bg-clip-text text-transparent">Paymint</h1>
-        <p className="text-xs text-gray-400 -mt-1">Web3 Invoicing</p>
-        </div>
-      </div>
-      </div>
-
-      {/* User Info */}
-      {address && (
-      <div className="p-6 border-b border-gray-700/50">
-        <div className="flex items-center gap-3 p-3 bg-gray-900/50 rounded-lg border border-gray-700/30">
-        <div className="w-10 h-10 bg-gradient-to-r from-emerald-500/20 to-emerald-400/20 rounded-xl flex items-center justify-center border border-emerald-500/30">
-          <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-          </svg>
-        </div>
-        <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-white">Connected</p>
-          <p className="text-xs text-gray-400 truncate">{truncateAddress(address)}</p>
-        </div>
-        <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
-        </div>
-      </div>
-      )}
-
-      {/* Navigation */}
-      <nav className="p-6">
-      <div className="space-y-2">
-        {navigation.map((item) => {
-        const isActive = location.pathname === item.href || 
-          (item.href !== "/dashboard" && location.pathname.startsWith(item.href));
-        
-        return (
-          <Link
-          key={item.name}
-          to={item.href}
-          className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 group ${
-            isActive
-            ? "bg-gradient-to-r from-emerald-500/20 to-emerald-400/20 border border-emerald-500/30 text-emerald-400 shadow-lg shadow-emerald-500/10"
-            : "text-gray-300 hover:text-white hover:bg-gray-700/50 border border-transparent hover:border-gray-600/50"
-          }`}
+    <>
+      {/* Overlay for mobile */}
+      <div
+        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-30 lg:hidden transition-opacity duration-300 ${isSidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+        onClick={onClose}
+        aria-label="Close sidebar overlay"
+      />
+      <aside className={`w-72 md:w-60 min-h-screen bg-black border-r border-gray-800/60 fixed z-40 flex flex-col transition-transform duration-300 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}>
+        {/* Emerald Gradient Accent */}
+        <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-r from-emerald-500/30 via-green-400/20 to-emerald-400/30 blur-2xl opacity-60 z-0"></div>
+        {/* Logo/Header */}
+        <div className="relative z-10 flex items-center gap-3 px-8 py-8 border-b border-gray-800/60">
+          <img src={logo} alt="Paymint Logo" className="h-16 w-40" />
+          {/* X icon for mobile close */}
+          <button
+            className="ml-auto lg:hidden p-2 text-gray-400 hover:text-white rounded-full transition-colors"
+            onClick={onClose}
+            aria-label="Close sidebar"
           >
-          <div className={`transition-colors duration-300 ${
-            isActive ? "text-emerald-400" : "text-gray-400 group-hover:text-white"
-          }`}>
-            {item.icon}
-          </div>
-          <span className="font-medium">{item.name}</span>
-          {isActive && (
-            <div className="ml-auto w-2 h-2 bg-emerald-400 rounded-full"></div>
-          )}
-          </Link>
-        );
-        })}
-      </div>
-
-      
-      </nav>
-
-      {/* Footer */}
-      <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-gray-700/50 flex flex-col items-center">
-
-      <WalletConnect />
-      
-      <div className="text-center mt-10">
-        <p className="text-xs text-gray-400">
-        Built on Sui Blockchain
-        </p>
-        <div className="flex items-center justify-center gap-1 mt-2">
-        <div className="w-1 h-1 bg-emerald-400 rounded-full animate-pulse"></div>
-        <p className="text-xs text-gray-500">Network: Testnet</p>
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
         </div>
-      </div>
-      </div>
-    </div>
+
+        {/* Navigation */}
+        <nav className="relative z-10 px-8 py-8 flex-1">
+          <div className="space-y-3">
+            {navigation.map((item) => {
+              const isActive = location.pathname === item.href ||
+                (item.href !== "/dashboard" && location.pathname.startsWith(item.href));
+              return (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className={`glass-card flex items-center gap-3 px-5 py-4 rounded-xl transition-all duration-300 cursor-pointer border shadow-lg backdrop-blur-xl text-base font-medium ${
+                    isActive
+                      ? "bg-gradient-to-r from-emerald-500/20 to-emerald-400/20 border-emerald-400/30 text-emerald-400 shadow-emerald-500/10 scale-[1.03]"
+                      : "bg-black/60 border-gray-800/60 text-gray-300 hover:text-white hover:border-emerald-400/20 hover:scale-[1.02]"
+                  }`}
+                >
+                  <span className={`transition-colors duration-300 ${isActive ? "text-emerald-400" : "text-gray-400 group-hover:text-white"}`}>{item.icon}</span>
+                  <span>{item.name}</span>
+                  {isActive && <span className="ml-auto w-2 h-2 bg-emerald-400 rounded-full"></span>}
+                </Link>
+              );
+            })}
+          </div>
+        </nav>
+        {/* Footer */}
+        <footer className="relative z-10 mt-auto px-8 py-6 border-t border-gray-800/60 flex flex-col items-center">
+          <WalletConnect />
+          <div className="text-center mt-8">
+            <p className="text-xs text-gray-400">Built on Sui Blockchain</p>
+            <div className="flex items-center justify-center gap-1 mt-2">
+              <span className="w-1 h-1 bg-emerald-400 rounded-full animate-pulse"></span>
+              <span className="text-xs text-gray-500">Network: Testnet</span>
+            </div>
+          </div>
+        </footer>
+      </aside>
+    </>
   );
 }

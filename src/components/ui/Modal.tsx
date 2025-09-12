@@ -63,7 +63,7 @@ export default function Modal({
       {/* Modal */}
       <div className={`
         relative w-full ${sizeClasses[size]}
-        bg-gray-900/95 backdrop-blur-md
+        bg-black/30 backdrop-blur-xl
         rounded-lg shadow-2xl
         border border-gray-700/50
         transform transition-all duration-300
@@ -71,7 +71,7 @@ export default function Modal({
       `}>
         {/* Header */}
         {title && (
-          <div className="px-6 py-4 border-b border-gray-700/50">
+          <div className="px-6 py-4">
             <div className="flex items-center justify-between">
               <h3 className="text-xl font-bold text-white gradient-text">
                 {title}

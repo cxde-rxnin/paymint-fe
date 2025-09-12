@@ -32,7 +32,19 @@ const WalletConnect = () => {
 
   return (
     <div className="flex items-center gap-3">
-      
+      <style>{`
+        .custom-wallet-modal {
+          background: rgba(20, 20, 20, 0.98);
+          border-radius: 1rem;
+          border: 1px solid rgba(64, 255, 180, 0.15);
+          box-shadow: 0 8px 32px 0 rgba(0,0,0,0.25);
+          backdrop-filter: blur(16px);
+          color: #e0ffe7;
+        }
+        .custom-wallet-modal * {
+          color: inherit !important;
+        }
+      `}</style>
       <ConnectButton
         connectText={account?.address ? "Connected" : "Connect Wallet"}
         className="
