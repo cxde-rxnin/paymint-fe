@@ -117,7 +117,7 @@ export default function Landing() {
                 <span className="inline-block px-3 py-1 mb-4 bg-emerald-500/20 text-emerald-400 rounded-full text-xs font-semibold">
                   Invoicing
                 </span>
-                <h3 className="text-3xl font-bold mb-2">Create & Send Invoices</h3>
+                <h3 className="text-3xl font-bold mb-2 text-white">Create & Send Invoices</h3>
                 <p className="text-gray-400">
                   Generate secure, verifiable invoices on-chain and share with your
                   clients via email or wallet address. Instant, borderless, and
@@ -135,7 +135,7 @@ export default function Landing() {
                 <span className="inline-block px-3 py-1 mb-4 bg-green-500/20 text-green-400 rounded-full text-xs font-semibold">
                   Streams
                 </span>
-                <h3 className="text-3xl font-bold mb-2">Automated Payroll</h3>
+                <h3 className="text-3xl font-bold mb-2 text-white">Automated Payroll</h3>
                 <p className="text-gray-400">
                   Pay multiple teammates in one go. Just create a stream, set
                   amounts, and funds are automatically split and sent on payment.
@@ -152,7 +152,7 @@ export default function Landing() {
                 <span className="inline-block px-3 py-1 mb-4 bg-purple-500/20 text-purple-400 rounded-full text-xs font-semibold">
                   No borders, no delays.
                 </span>
-                <h3 className="text-2xl font-bold mb-2">Borderless Transactions</h3>
+                <h3 className="text-2xl font-bold mb-2 text-white">Borderless Transactions</h3>
                 <p className="text-gray-400">
                   Send and receive payments anywhere in the world with the speed and security of blockchain.
                 </p>
@@ -166,7 +166,7 @@ export default function Landing() {
                 <span className="inline-block px-3 py-1 mb-4 bg-blue-500/20 text-blue-400 rounded-full text-xs font-semibold">
                   Payments
                 </span>
-                <h3 className="text-2xl font-bold mb-2">Fast & Secure</h3>
+                <h3 className="text-2xl font-bold mb-2 text-white">Fast & Secure</h3>
                 <p className="text-gray-400">
                   Transactions settle instantly on Sui with best-in-class
                   performance, low fees, and robust security.
@@ -184,7 +184,7 @@ export default function Landing() {
       <footer className="py-12 bg-black border-t border-gray-800 relative z-10">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <span className="text-lg font-semibold">Paymint</span>
+            <span className="text-lg font-semibold text-white">Paymint</span>
             <span className="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 rounded-full text-xs font-semibold">
               Built on Sui
             </span>
