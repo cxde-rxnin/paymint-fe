@@ -27,7 +27,7 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({
 
   if (payrolls.length === 0) {
     return (
-      <div className="bg-gray-800/30 backdrop-blur-sm rounded-lg p-2 lg:p-2 text-center">
+      <div className="bg-black/30 backdrop-blur-sm rounded-lg p-12 text-center border border-gray-700/50 shadow-2xl">
         <div className="w-10 h-10 mx-auto mb-6 bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-lg flex items-center justify-center shadow-xl shadow-emerald-500/25 mt-10">
           <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 515.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -48,12 +48,11 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({
   }
 
   return (
-    <div className="bg-gray-800/30 backdrop-blur-sm rounded-lg border border-gray-700/50 shadow-2xl overflow-hidden">
-      {/* Desktop Table View - Hidden on Mobile */}
-      <div className="hidden lg:block overflow-x-auto">
+    <div className="bg-black/30 backdrop-blur-sm rounded-lg border border-gray-700/50 shadow-2xl overflow-hidden">
+      <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
-            <tr className="bg-gradient-to-r from-gray-900/50 to-gray-800/50 border-b border-gray-700/50">
+            <tr className="bg-black/50 border-b border-gray-700/50">
               <th className="px-6 py-5 text-left text-xs font-bold text-emerald-400 uppercase tracking-wider">
                 <div className="flex items-center gap-2">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

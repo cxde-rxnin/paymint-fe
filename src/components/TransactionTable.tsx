@@ -27,7 +27,7 @@ export default function TransactionTable({ txs }: { txs: Tx[] }) {
 
   if (txs.length === 0) {
     return (
-      <div className="bg-gray-800/30 backdrop-blur-sm rounded-lg p-12 text-center">
+      <div className="bg-black/30 backdrop-blur-sm rounded-lg p-12 text-center">
         <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-lg flex items-center justify-center shadow-xl shadow-emerald-500/25">
           <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
@@ -48,11 +48,11 @@ export default function TransactionTable({ txs }: { txs: Tx[] }) {
   }
 
   return (
-    <div className="bg-gray-800/30 backdrop-blur-sm rounded-lg border border-gray-700/50 shadow-2xl overflow-hidden">
+    <div className="bg-black/30 backdrop-blur-sm rounded-lg border border-gray-700/50 shadow-2xl overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
-            <tr className="bg-gradient-to-r from-gray-900/50 to-gray-800/50 border-b border-gray-700/50">
+            <tr className="bg-black">
               <th className="px-6 py-5 text-left text-xs font-bold text-emerald-400 uppercase tracking-wider">
                 <div className="flex items-center gap-2">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -95,8 +95,7 @@ export default function TransactionTable({ txs }: { txs: Tx[] }) {
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-700/30">
-            {txs.map((tx) => (
+          <tbody className="divide-y divide-gray-700/30 bg-black"> {txs.map((tx) => (
               <tr 
                 key={tx.id} 
                 className="hover:bg-gray-700/20 transition-all duration-300 group"

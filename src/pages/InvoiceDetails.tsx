@@ -69,10 +69,13 @@ export default function InvoiceDetails() {
   const total = mistToSui(invoice.amount) + surcharge;
   const createdDate = new Date(invoice.createdAt || Date.now());
 
- 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-emerald-950/20 p-4 lg:p-8">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen w-full relative bg-black text-white overflow-x-hidden">
+      {/* Emerald Void Background */}
+      <div className="absolute inset-0 z-0" style={{ background: "radial-gradient(125% 125% at 50% 90%, #000000 40%, #072607 100%)" }} />
+      {/* Blurred Gradient Accent - Fixed width constraints */}
+      <div className="absolute left-1/2 -translate-x-1/2 top-0 w-full max-w-4xl h-32 bg-gradient-to-r from-emerald-500/40 via-green-400/30 to-emerald-400/40 rounded-3xl blur-3xl opacity-70 z-0"></div>
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
@@ -80,7 +83,6 @@ export default function InvoiceDetails() {
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                console.log('Back button clicked - navigating to /invoices');
                 navigate('/invoices');
               }}
               className="inline-flex items-center gap-2 text-gray-400 hover:text-emerald-400 transition-colors duration-200 mb-4 z-50 relative cursor-pointer"
@@ -96,14 +98,10 @@ export default function InvoiceDetails() {
             </h1>
             <p className="text-gray-400 text-lg mt-2">Invoice #{invoice.clientId}</p>
           </div>
-          {/* <div className="text-right">
-            {getStatusBadge(invoice.status || 'active')}
-          </div> */}
         </div>
-
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="bg-gray-800/30 backdrop-blur-sm rounded-lg p-6 border border-gray-700/50 shadow-2xl">
+          <div className="glass-card bg-black/60 backdrop-blur-xl rounded-2xl p-6 border border-gray-800/60 shadow-lg">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-400 text-sm font-medium">Base Amount</p>
@@ -117,8 +115,7 @@ export default function InvoiceDetails() {
               </div>
             </div>
           </div>
-
-          <div className="bg-gray-800/30 backdrop-blur-sm rounded-lg p-6 border border-gray-700/50 shadow-2xl">
+          <div className="glass-card bg-black/60 backdrop-blur-xl rounded-2xl p-6 border border-gray-800/60 shadow-lg">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-400 text-sm font-medium">Surcharge</p>
@@ -132,8 +129,7 @@ export default function InvoiceDetails() {
               </div>
             </div>
           </div>
-
-          <div className="bg-gray-800/30 backdrop-blur-sm rounded-lg p-6 border border-gray-700/50 shadow-2xl">
+          <div className="glass-card bg-black/60 backdrop-blur-xl rounded-2xl p-6 border border-gray-800/60 shadow-lg">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-400 text-sm font-medium">Total Amount</p>
@@ -147,8 +143,7 @@ export default function InvoiceDetails() {
               </div>
             </div>
           </div>
-
-          <div className="bg-gray-800/30 backdrop-blur-sm rounded-lg p-6 border border-gray-700/50 shadow-2xl">
+          <div className="glass-card bg-black/60 backdrop-blur-xl rounded-2xl p-6 border border-gray-800/60 shadow-lg">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-400 text-sm font-medium">Created</p>
@@ -163,13 +158,12 @@ export default function InvoiceDetails() {
             </div>
           </div>
         </div>
-
         {/* Main Content */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Invoice Information */}
           <div className="lg:col-span-2 space-y-8">
             {/* Basic Details */}
-            <div className="bg-gray-800/30 backdrop-blur-sm rounded-lg p-8 border border-gray-700/50 shadow-2xl">
+            <div className="glass-card bg-black/60 backdrop-blur-xl rounded-2xl p-8 border border-gray-800/60 shadow-lg">
               <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
                 <div className="w-8 h-8 bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-lg flex items-center justify-center">
                   <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -178,7 +172,6 @@ export default function InvoiceDetails() {
                 </div>
                 Invoice Information
               </h3>
-              
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div>
@@ -187,7 +180,6 @@ export default function InvoiceDetails() {
                       <p className="text-white font-mono">{invoice.clientId}</p>
                     </div>
                   </div>
-                  
                   {invoice.service && (
                     <div>
                       <label className="text-sm font-medium text-emerald-400 mb-2 block">Service</label>
@@ -197,7 +189,6 @@ export default function InvoiceDetails() {
                     </div>
                   )}
                 </div>
-                
                 <div className="space-y-4">
                   <div>
                     <label className="text-sm font-medium text-emerald-400 mb-2 block">Payer Address</label>
@@ -205,7 +196,6 @@ export default function InvoiceDetails() {
                       <p className="text-white font-mono text-sm break-all">{invoice.payer}</p>
                     </div>
                   </div>
-                  
                   {invoice.description && (
                     <div>
                       <label className="text-sm font-medium text-emerald-400 mb-2 block">Description</label>
@@ -218,12 +208,10 @@ export default function InvoiceDetails() {
               </div>
             </div>
           </div>
-
           {/* Actions Sidebar */}
           <div className="space-y-6">
-
             {/* Invoice Summary */}
-            <div className="bg-gray-800/30 backdrop-blur-sm rounded-lg p-6 border border-gray-700/50 shadow-2xl">
+            <div className="glass-card bg-black/60 backdrop-blur-xl rounded-2xl p-6 border border-gray-800/60 shadow-lg">
               <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-3">
                 <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-blue-400 rounded-lg flex items-center justify-center">
                   <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -232,7 +220,6 @@ export default function InvoiceDetails() {
                 </div>
                 Payment Summary
               </h3>
-              
               <div className="space-y-3">
                 <div className="flex justify-between items-center py-2 border-b border-gray-700/30">
                   <span className="text-gray-400">Base Amount</span>
@@ -250,10 +237,9 @@ export default function InvoiceDetails() {
             </div>
           </div>
         </div>
-
         {/* Technical Details - Full Width */}
         <div className="mt-8">
-          <div className="bg-gray-800/30 backdrop-blur-sm rounded-3xl p-8 border border-gray-700/50 shadow-2xl">
+          <div className="glass-card bg-black/60 backdrop-blur-xl rounded-2xl p-8 border border-gray-800/60 shadow-lg">
             <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
               <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-purple-400 rounded-lg flex items-center justify-center">
                 <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -262,7 +248,6 @@ export default function InvoiceDetails() {
               </div>
               Technical Details
             </h3>
-            
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="text-sm font-medium text-emerald-400 mb-2 block">Metadata Hash</label>
@@ -270,7 +255,6 @@ export default function InvoiceDetails() {
                   <p className="text-white font-mono text-sm break-all">{invoice.metadataHash}</p>
                 </div>
               </div>
-              
               {invoice.objectId && (
                 <div>
                   <label className="text-sm font-medium text-emerald-400 mb-2 block">Object ID</label>
