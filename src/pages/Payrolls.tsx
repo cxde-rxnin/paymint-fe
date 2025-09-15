@@ -7,7 +7,7 @@ import { mistToSui, formatSui } from "../utils/format";
 
 export const Payrolls: React.FC = () => {
   const { address } = useWalletStore();
-  const { payrolls, loading, fetchPayrolls } = usePayrollStore();
+  const { payrolls, fetchPayrolls } = usePayrollStore();
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
   useEffect(() => {
@@ -15,14 +15,6 @@ export const Payrolls: React.FC = () => {
       fetchPayrolls(address);
     }
   }, [address, fetchPayrolls]);
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-500"></div>
-      </div>
-    );
-  }
 
   const stats = {
     totalPayrolls: payrolls.length,
